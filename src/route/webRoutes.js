@@ -1,6 +1,7 @@
 import express from "express"
 import userController from '../controllers/userController'
 import homeController from '../controllers/homeController'
+import { checkUserJWT } from '../middleware/JWTAction'
 
 
 
@@ -12,7 +13,7 @@ const webRoutes = (app) => {
     // router.post('/crud-create-users', userController.handleCreateUser)
 
     router.post('/api/login', userController.handleLoginUsers);
-    router.post('/crud-user-create', userController.handleCreateAllUsers);
+    router.post('/api/sign-up', userController.handleSignup);
 
 
 

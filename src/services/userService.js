@@ -101,7 +101,7 @@ let handleLoginUsers = (data) => {
     })
 }
 
-let handleCreateAllUsers = (data) => {
+let handleSignup = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (!data.email || !data.password
@@ -122,7 +122,7 @@ let handleCreateAllUsers = (data) => {
                     address: data.address,
                     gender: data.gender,
                     roleId: data.roleId,
-                    phonenumber: data.phonenumber
+                    phonenumber: data.phoneNumber
                 })
                 resolve({
                     errCode: 0,
@@ -143,5 +143,5 @@ let handleCreateAllUsers = (data) => {
 
 
 module.exports = {
-    handleLoginUsers, handleCreateAllUsers
+    handleLoginUsers, handleSignup
 }

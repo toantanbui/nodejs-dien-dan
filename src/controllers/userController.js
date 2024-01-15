@@ -39,9 +39,9 @@ let handleLoginUsers = async (req, res) => {
     }
 }
 
-let handleCreateAllUsers = async (req, res) => {
+let handleSignup = async (req, res) => {
     try {
-        let users = await userService.handleCreateAllUsers(req.body);
+        let users = await userService.handleSignup(req.body);
         return res.status(200).json(users)
 
 
@@ -65,5 +65,5 @@ let handleCreateAllUsers = async (req, res) => {
 
 module.exports = {
     // handleCreateUser,
-    handleLoginUsers, handleCreateAllUsers
+    handleLoginUsers, handleSignup
 }
