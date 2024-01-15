@@ -1,6 +1,8 @@
 
 import db from '../models/index'
 const _ = require('lodash');
+import { createJWT } from '../middleware/JWTAction';
+
 
 
 // let handleCreateUser = (data) => {
@@ -46,9 +48,100 @@ const _ = require('lodash');
 //     })
 // }
 
+let handleLoginUsers = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.password) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+
+            } else {
+
+                let users = await db.Users.findOne({
+                    where: {
+                        email: data.email,
+                        password: data.password,
+
+                    }
+                })
+                if (users) {
+                    let token = createJWT({
+                        email: data.email,
+                        password: data.password,
+
+                        expiresIn: '1h'
+                    });
+
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'successful login',
+                        data: users,
+                        token1: token
+
+                    });
+                }
+                else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Wrong account or password, the account has not been confirmed',
+
+                    });
+                }
+
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleCreateAllUsers = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.password
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
 
 
 
-// module.exports = {
-//     handleCreateUser,
-// }
+            } else {
+                await db.Users.create({
+                    email: data.email,
+                    password: data.password,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    gender: data.gender,
+                    roleId: data.roleId,
+                    phonenumber: data.phonenumber
+                })
+                resolve({
+                    errCode: 0,
+                    errMessage: 'create success',
+
+                });
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+
+
+
+module.exports = {
+    handleLoginUsers, handleCreateAllUsers
+}
