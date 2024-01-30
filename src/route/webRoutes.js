@@ -14,6 +14,10 @@ const webRoutes = (app) => {
 
     router.post('/api/login', userController.handleLoginUsers);
     router.post('/api/sign-up', userController.handleSignup);
+    router.get('/api/logout', userController.handleLogout);
+    router.get('/api/get-one-user', checkUserJWT, userController.handleGetOneUser);
+    router.post('/api/edit-one-user', userController.handleEditOneUser);
+
 
 
 

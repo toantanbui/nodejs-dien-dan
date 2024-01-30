@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     phonenumber: DataTypes.STRING,
     token: DataTypes.STRING,
+    background: DataTypes.BLOB('long'),
   }, {
     sequelize,
     modelName: 'Users',

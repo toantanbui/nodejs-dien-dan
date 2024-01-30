@@ -78,7 +78,7 @@ let handleLoginUsers = (data) => {
                     resolve({
                         errCode: 0,
                         errMessage: 'successful login',
-                        data: users,
+                        data: users.id,
                         token1: token
 
                     });
@@ -139,9 +139,157 @@ let handleSignup = (data) => {
     })
 }
 
+let handleLogout = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            resolve({
+                errCode: 0,
+                errMessage: 'Successfully logged out'
+            })
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleGetOneUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.id
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await db.Users.findOne({
+                    where: {
+                        id: data.id
+
+                    },
+                    raw: true,
+                    attributes: [
+                        'id', 'firstName',
+                        'lastName', 'email',
+                        'password', 'address',
+                        'roleId', 'gender',
+                        'image', 'status',
+                        'phonenumber', 'token',
+                        'createdAt', 'updatedAt', 'background'
+                    ]
+
+                })
+                if (users) {
+                    console.log('gia tri user', users)
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'Get success',
+                        data: users
+
+
+                    });
+                } else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'Id does not exist',
+
+
+                    });
+                }
+
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleEditOneUser = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (
+                !data.id || !data.email || !data.password
+
+
+            ) {
+
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+
+
+
+            } else {
+
+
+
+                let users = await db.Users.findOne({
+                    where: { id: data.id, email: data.email, password: data.password }
+
+
+                })
+                if (users) {
+                    console.log('edit user', users)
+                    users.address = data.address;
+                    // users.email = data.email;
+                    users.firstName = data.firstName;
+
+                    users.lastName = data.lastName;
+
+                    users.password = data.password;
+                    users.phonenumber = data.phonenumber;
+                    users.roleId = data.roleId;
+
+                    users.gender = data.gender;
+                    users.image = data.image;
+                    users.background = data.background;
+
+
+
+                    await users.save();
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'edit success',
+                    })
+                } else (
+
+
+                    resolve({
+                        errCode: 2,
+                        errMessage: 'user does not exist',
+                    })
+                )
+            }
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+
+}
+
+
 
 
 
 module.exports = {
-    handleLoginUsers, handleSignup
+    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser
 }

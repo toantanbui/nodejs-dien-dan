@@ -57,6 +57,62 @@ let handleSignup = async (req, res) => {
     }
 }
 
+let handleLogout = async (req, res) => {
+    try {
+        let users = await userService.handleLogout();
+        await res.cookie("jwt", "dang-xuat", { httpOnly: true })
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleGetOneUser = async (req, res) => {
+    try {
+        let users = await userService.handleGetOneUser(req.query);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleEditOneUser = async (req, res) => {
+    try {
+        let users = await userService.handleEditOneUser(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
 
 
 
@@ -65,5 +121,5 @@ let handleSignup = async (req, res) => {
 
 module.exports = {
     // handleCreateUser,
-    handleLoginUsers, handleSignup
+    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser
 }
