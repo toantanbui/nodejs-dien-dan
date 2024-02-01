@@ -114,6 +114,81 @@ let handleEditOneUser = async (req, res) => {
     }
 }
 
+let handleCreatePosts = async (req, res) => {
+    try {
+        let users = await userService.handleCreatePosts(req.body);
+        console.log(req.body)
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleGetPosts = async (req, res) => {
+    try {
+        let users = await userService.handleGetPosts(req.body);
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleCreateComment1 = async (req, res) => {
+    try {
+        let users = await userService.handleCreateComment1(req.body);
+        console.log(req.body)
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
+let handleCreateComment2 = async (req, res) => {
+    try {
+        let users = await userService.handleCreateComment2(req.body);
+        console.log(req.body)
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
 
 
 
@@ -121,5 +196,6 @@ let handleEditOneUser = async (req, res) => {
 
 module.exports = {
     // handleCreateUser,
-    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser
+    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
+    handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2
 }

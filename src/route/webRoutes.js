@@ -18,6 +18,12 @@ const webRoutes = (app) => {
     router.get('/api/get-one-user', checkUserJWT, userController.handleGetOneUser);
     router.post('/api/edit-one-user', userController.handleEditOneUser);
 
+    router.post('/api/create-posts', userController.handleCreatePosts);
+    router.post('/api/get-posts', userController.handleGetPosts);
+    router.post('/api/create-comment1', userController.handleCreateComment1);
+    router.post('/api/create-comment2', userController.handleCreateComment2);
+
+
 
 
 

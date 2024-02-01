@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import webRoutes from './route/webRoutes';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+const connect = require('./connectDBMongo/connectDBMongo');
 
 app.listen(port, () => {
     console.log(`Moi ban truy cap vao: http://localhost:${port}`)

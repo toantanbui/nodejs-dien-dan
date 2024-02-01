@@ -2,6 +2,7 @@
 import db from '../models/index'
 const _ = require('lodash');
 import { createJWT } from '../middleware/JWTAction';
+import modelsMongo from '../modelsMongo/modelsMongo';
 
 
 
@@ -288,8 +289,205 @@ let handleEditOneUser = (data) => {
 
 
 
+let handleCreatePosts = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.firstName || !data.lastName
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+
+
+                await modelsMongo.Posts.create({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+
+                    avatar: data.avatar,
+                    email: data.email,
+                    postName: data.postName,
+                    postContent: data.postContent,
+                    like: data.like,
+                    comment: data.comment,
+                    Comment1: data.Comment1,
+                    time: new Date(),
+
+                })
+
+
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'create success',
+
+                });
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleGetPosts = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.id
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.Posts.find({
+                    _id: data.id
+
+                })
+                    .populate('Comment1')
+                    .populate({
+                        path: 'Comment1',
+                        populate: { path: 'Comment2' }
+                    })
+
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleCreateComment1 = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.firstName || !data.lastName
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+
+
+                await modelsMongo.Comment1.create({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    avatar: data.avatar,
+                    content: data.content,
+
+                    like: data.like,
+                    comment: data.comment,
+                    Comment2: data.Comment2
+
+
+                })
+
+
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'create success',
+
+                });
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleCreateComment2 = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.firstName || !data.lastName
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+
+
+                await modelsMongo.Comment2.create({
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    avatar: data.avatar,
+                    content: data.content,
+
+                    like: data.like,
+                    comment: data.comment,
+
+                })
+
+
+
+                resolve({
+                    errCode: 0,
+                    errMessage: 'create success',
+
+                });
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+
+
 
 
 module.exports = {
-    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser
+    handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
+    handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2
 }
