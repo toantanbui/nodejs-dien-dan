@@ -308,7 +308,7 @@ let handleCreatePosts = (data) => {
                 await modelsMongo.Posts.create({
                     firstName: data.firstName,
                     lastName: data.lastName,
-
+                    idUser: data.id,
                     avatar: data.avatar,
                     email: data.email,
                     postName: data.postName,
@@ -354,15 +354,15 @@ let handleGetPosts = (data) => {
 
             } else {
                 let users = await modelsMongo.Posts.find({
-                    _id: data.id
+                    idUser: data.id
 
                 })
                     .populate('Comment1')
-                    .populate({
-                        path: 'Comment1',
-                        populate: { path: 'Comment2' }
-                    })
-
+                // .populate({
+                //     path: 'Comment1',
+                //     populate: { path: 'Comment2' }
+                // })
+                console.log('gia trị cần tìm', users)
 
                 if (!_.isEmpty(users)) {
                     resolve({
@@ -406,8 +406,8 @@ let handleCreateComment1 = (data) => {
 
             } else {
 
-
-                await modelsMongo.Comment1.create({
+                let users1 = await modelsMongo.Comment1.create({
+                    idPosts: data.idPosts,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     email: data.email,
@@ -416,18 +416,46 @@ let handleCreateComment1 = (data) => {
 
                     like: data.like,
                     comment: data.comment,
-                    Comment2: data.Comment2
-
 
                 })
+                if (users1) {
+
+                    let users = await modelsMongo.Posts.find({
+                        _id: data.idPosts,
+
+                    })
+                    console.log('gt users la', users)
+                    console.log('gt users la [0]', users[0])
+                    if (!_.isEmpty(users[0])) {
+
+                        let abc = await modelsMongo.Posts.update({
+                            Comment1: users[0].Comment1,
+
+                        },
+                            {
+
+                                $push: { Comment1: users1._id }
+
+
+                            })
+                        console.log('gia trị cập nhập là', abc)
+
+                    }
+
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'create success',
+
+                    });
+                }
 
 
 
-                resolve({
-                    errCode: 0,
-                    errMessage: 'create success',
 
-                });
+
+
+
+
             }
 
         } catch (e) {

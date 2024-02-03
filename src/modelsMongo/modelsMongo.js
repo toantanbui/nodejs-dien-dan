@@ -8,18 +8,28 @@ const ObjectId = Schema.ObjectId;
 
 const schema1 = new Schema({
     // id: ObjectId,
+    idUser: String,
     firstName: String,
     lastName: String,
     email: String,
     postName: String,
     postContent: String,
-    like: Number,
-    comment: Number,
-    time: Date,
-    Comment1: {
-        type: String,
-        ref: 'Comment1'
+    like: {
+        type: Number,
+        default: 0,
     },
+
+    comment: {
+        type: Number,
+        default: 0,
+    },
+    time: Date,
+    Comment1: [{
+        type: String,
+        ref: 'Comment1',
+
+
+    }],
 
 
     avatar: Buffer,
@@ -35,18 +45,26 @@ const schema1 = new Schema({
 const Posts = mongoose.model('Posts', schema1);
 
 const schema2 = new Schema({
-
+    idPosts: String,
     firstName: String,
     lastName: String,
     email: String,
     content: String,
-    like: Number,
-
-    comment: Number,
-    Comment2: {
-        type: String,
-        ref: 'Comment2'
+    like: {
+        type: Number,
+        default: 0,
     },
+
+    comment: {
+        type: Number,
+        default: 0,
+    },
+    Comment2: [{
+        type: String,
+        ref: 'Comment2',
+
+
+    }],
 
 
 
@@ -67,9 +85,15 @@ const schema3 = new Schema({
     lastName: String,
     email: String,
     content: String,
-    like: Number,
+    like: {
+        type: Number,
+        default: 0,
+    },
 
-    comment: Number,
+    comment: {
+        type: Number,
+        default: 0,
+    },
 
 
 
