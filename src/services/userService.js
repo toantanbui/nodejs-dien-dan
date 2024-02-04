@@ -430,11 +430,13 @@ let handleCreateComment1 = (data) => {
 
                         let abc = await modelsMongo.Posts.update({
                             Comment1: users[0].Comment1,
+                            comment: users[0].comment,
 
                         },
                             {
 
-                                $push: { Comment1: users1._id }
+                                $push: { Comment1: users1._id },
+                                comment: users[0].Comment1.length
 
 
                             })
@@ -511,11 +513,68 @@ let handleCreateComment2 = (data) => {
     })
 }
 
+let handleEditPosts = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.idPosts || !data.like
+
+            ) {
+
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter'
+                })
+
+
+
+            } else {
+
+
+
+
+                let users = await modelsMongo.Posts.find({
+                    _id: data.idPosts,
+
+                })
+                console.log('gt users la', users)
+                console.log('gt users la [0]', users[0])
+                if (!_.isEmpty(users[0])) {
+
+                    await modelsMongo.Posts.update({
+                        like: users[0].like,
+
+
+                    },
+                        {
+                            like: data.like,
+
+
+
+
+                        })
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'edit success',
+                    })
+                }
+
+
+            }
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
 
 
 
 
 module.exports = {
     handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
-    handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2
+    handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2,
+    handleEditPosts
 }

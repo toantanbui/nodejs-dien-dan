@@ -20,6 +20,8 @@ const webRoutes = (app) => {
 
     router.post('/api/create-posts', userController.handleCreatePosts);
     router.post('/api/get-posts', userController.handleGetPosts);
+    router.post('/api/edit-posts', userController.handleEditPosts);
+
     router.post('/api/create-comment1', userController.handleCreateComment1);
     router.post('/api/create-comment2', userController.handleCreateComment2);
 
