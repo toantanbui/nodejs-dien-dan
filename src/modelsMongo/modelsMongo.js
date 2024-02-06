@@ -14,6 +14,10 @@ const schema1 = new Schema({
     email: String,
     postName: String,
     postContent: String,
+    isLike: {
+        type: Boolean,
+        default: false
+    },
     like: {
         type: Number,
         default: 0,
@@ -50,6 +54,10 @@ const schema2 = new Schema({
     lastName: String,
     email: String,
     content: String,
+    isLike: {
+        type: Boolean,
+        default: false
+    },
     like: {
         type: Number,
         default: 0,
@@ -85,6 +93,10 @@ const schema3 = new Schema({
     lastName: String,
     email: String,
     content: String,
+    isLike: {
+        type: Boolean,
+        default: false
+    },
     like: {
         type: Number,
         default: 0,

@@ -516,9 +516,11 @@ let handleCreateComment2 = (data) => {
 let handleEditPosts = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.idPosts || !data.like
+
+            if (!data.idPosts
 
             ) {
+                console.log('thiếu tham so', data)
 
                 resolve({
                     errCode: 1,
@@ -542,11 +544,13 @@ let handleEditPosts = (data) => {
 
                     await modelsMongo.Posts.update({
                         like: users[0].like,
+                        isLike: users[0].isLike,
 
 
                     },
                         {
                             like: data.like,
+                            isLike: data.isLike,
 
 
 
@@ -569,6 +573,115 @@ let handleEditPosts = (data) => {
     })
 }
 
+let handleAllGetPosts = () => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (false
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.Posts.find({
+
+
+                })
+                    .populate('Comment1')
+                    .limit(3)
+                // .populate({
+                //     path: 'Comment1',
+                //     populate: { path: 'Comment2' }
+                // })
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
+let handleGetPostsById = (data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (!data.id
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.Posts.find({
+                    _id: data.id
+
+                })
+                    .populate('Comment1')
+                // .populate({
+                //     path: 'Comment1',
+                //     populate: { path: 'Comment2' }
+                // })
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
 
 
 
@@ -576,5 +689,5 @@ let handleEditPosts = (data) => {
 module.exports = {
     handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
     handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2,
-    handleEditPosts
+    handleEditPosts, handleAllGetPosts, handleGetPostsById
 }
