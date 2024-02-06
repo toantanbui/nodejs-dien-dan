@@ -682,6 +682,55 @@ let handleGetPostsById = (data) => {
     })
 }
 
+let handleGetPostsLike = () => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (false
+
+            ) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing paramater'
+                })
+
+
+
+            } else {
+                let users = await modelsMongo.Posts.find({
+                })
+                    .sort({ like: -1 })
+                    .limit(3)
+                console.log('gia trị cần tìm', users)
+
+                if (!_.isEmpty(users)) {
+                    resolve({
+                        errCode: 0,
+                        errMessage: 'success',
+                        data: users
+                    })
+                } else {
+                    resolve({
+                        errCode: 3,
+                        errMessage: 'Not found',
+
+                    })
+                }
+            }
+
+
+
+
+
+        } catch (e) {
+            reject(e)
+
+
+        }
+    })
+}
+
 
 
 
@@ -689,5 +738,5 @@ let handleGetPostsById = (data) => {
 module.exports = {
     handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
     handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2,
-    handleEditPosts, handleAllGetPosts, handleGetPostsById
+    handleEditPosts, handleAllGetPosts, handleGetPostsById, handleGetPostsLike
 }

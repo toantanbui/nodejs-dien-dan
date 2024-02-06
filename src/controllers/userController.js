@@ -247,6 +247,25 @@ let handleGetPostsById = async (req, res) => {
     }
 }
 
+let handleGetPostsLike = async (req, res) => {
+    try {
+        let users = await userService.handleGetPostsLike();
+
+        return res.status(200).json(users)
+
+
+
+    } catch (e) {
+        console.log(e)
+        return res.status(200).json({
+            errCode: -1,
+            errMessage: 'server error'
+        })
+
+
+    }
+}
+
 
 
 
@@ -255,5 +274,5 @@ module.exports = {
     // handleCreateUser,
     handleLoginUsers, handleSignup, handleLogout, handleGetOneUser, handleEditOneUser,
     handleCreatePosts, handleGetPosts, handleCreateComment1, handleCreateComment2,
-    handleEditPosts, handleAllGetPosts, handleGetPostsById
+    handleEditPosts, handleAllGetPosts, handleGetPostsById, handleGetPostsLike
 }
