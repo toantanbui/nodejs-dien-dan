@@ -41,6 +41,9 @@ module.exports = {
       token: {
         type: Sequelize.STRING
       },
+      background: {
+        type: Sequelize.BLOB('long'),
+      },
 
 
 
